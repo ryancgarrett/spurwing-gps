@@ -21,7 +21,7 @@
             android:resource="@xml/automotive_app_desc" />
         <meta-data
             android:name="androidx.car.app.minCarApiLevel"
-            android:value="5" />
+            android:value="1" />
 
         <!-- The Android Auto (cart screen) side of the app. -->
         <service
