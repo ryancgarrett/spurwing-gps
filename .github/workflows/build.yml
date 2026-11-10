@@ -1,5 +1,6 @@
-# Builds the app on every push to main and publishes it as a GitHub release.
-# Obtainium on the phone watches the releases and offers each new one as an update.
+# Builds the app on every push to main, publishes it as a GitHub release, and
+# uploads it to the Google Play internal testing track so the cart phone updates
+# itself through the Play Store.
 name: Build and release
 
 on:
@@ -16,6 +17,7 @@ jobs:
     env:
       BUILD_NUMBER: ${{ github.run_number }}
       HAS_KEY: ${{ secrets.SIGNING_KEYSTORE_B64 != '' }}
+      HAS_PLAY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -55,3 +57,14 @@ jobs:
           files: |
             SpurwingGPS-1.0.${{ github.run_number }}.apk
             SpurwingGPS-1.0.${{ github.run_number }}.aab
+
+      - name: Upload to Google Play internal testing
+        if: env.HAS_KEY == 'true' && env.HAS_PLAY == 'true'
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.dontnibble.spurwinggps
+          releaseFiles: SpurwingGPS-1.0.${{ github.run_number }}.aab
+          releaseName: "1.0.${{ github.run_number }}"
+          tracks: internal
+          status: completed
