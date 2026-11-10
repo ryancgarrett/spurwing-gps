@@ -49,6 +49,9 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        buildConfig = true
+    }
     lint {
         // Lint warnings shouldn't stop a build from reaching the phone.
         abortOnError = false

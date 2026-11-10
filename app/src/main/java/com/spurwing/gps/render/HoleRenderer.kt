@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
+import com.spurwing.gps.BuildConfig
 import com.spurwing.gps.Fix
 import com.spurwing.gps.course.CourseData
 import com.spurwing.gps.course.Distances
@@ -516,7 +517,8 @@ class HoleRenderer {
             y?.onGreen == true -> "On the green · GPS ±${accuracyYards(fix)} yd"
             else -> "GPS ±${accuracyYards(fix)} yd"
         }
-        return if (round.autoPaused) "$gps · Auto hole off" else gps
+        val status = if (round.autoPaused) "$gps · Auto hole off" else gps
+        return "$status · v${BuildConfig.VERSION_NAME}"
     }
 
     private fun accuracyYards(fix: Fix) = max(1, (fix.accuracyMeters / METERS_PER_YARD).toInt())
