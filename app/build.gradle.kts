@@ -11,13 +11,13 @@ val buildNumber: Int = System.getenv("BUILD_NUMBER")?.toIntOrNull() ?: 1
 
 android {
     namespace = "com.spurwing.gps"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         // The app's permanent ID on Google Play, under your own domain.
         applicationId = "com.dontnibble.spurwinggps"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = buildNumber
         versionName = "1.0.$buildNumber"
     }
