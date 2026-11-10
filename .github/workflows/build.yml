@@ -40,8 +40,10 @@ jobs:
           else
             echo "::warning::Signing secrets aren't set, so this build is only a test and won't be released to the phone."
           fi
-          ./gradlew --no-daemon assembleRelease
+          ./gradlew --no-daemon assembleRelease bundleRelease
           cp app/build/outputs/apk/release/app-release.apk "SpurwingGPS-1.0.$BUILD_NUMBER.apk"
+          # The app bundle is the format Google Play takes.
+          cp app/build/outputs/bundle/release/app-release.aab "SpurwingGPS-1.0.$BUILD_NUMBER.aab"
 
       - name: Publish release
         if: env.HAS_KEY == 'true'
@@ -50,4 +52,6 @@ jobs:
           tag_name: v1.0.${{ github.run_number }}
           name: SpurWing GPS 1.0.${{ github.run_number }}
           body: ${{ github.event.head_commit.message }}
-          files: SpurwingGPS-1.0.${{ github.run_number }}.apk
+          files: |
+            SpurwingGPS-1.0.${{ github.run_number }}.apk
+            SpurwingGPS-1.0.${{ github.run_number }}.aab

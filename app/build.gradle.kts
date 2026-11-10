@@ -14,7 +14,8 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.spurwing.gps"
+        // The app's permanent ID on Google Play, under your own domain.
+        applicationId = "com.dontnibble.spurwinggps"
         minSdk = 26
         targetSdk = 35
         versionCode = buildNumber
